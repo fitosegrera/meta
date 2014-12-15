@@ -43,8 +43,17 @@ net.createServer(function(socket) {
     // Handle incoming messages from clients.
     socket.on('data', function(data) {
         c.checkCommands(data.toString('utf-8'), function(newdata) {
-            if (newdata == "store_art") {
+            if (newdata == "store_emilio") {
                 var imagefile = fs.readFile("./images/emilio.jpg", 'base64', function(err, imgdata) {
+                    if (err) throw err;
+                    //save images and info to database
+                    db.imgs.save(imgdata, function(err, saved) {
+                        if (err || !saved) console.log("Data not saved");
+                        else console.log("Data saved");
+                    });
+                });
+            }else if (newdata == "store_tuto") {
+                var imagefile = fs.readFile("./images/tuto.jpg", 'base64', function(err, imgdata) {
                     if (err) throw err;
                     //save images and info to database
                     db.imgs.save(imgdata, function(err, saved) {
@@ -54,14 +63,14 @@ net.createServer(function(socket) {
                 });
             } else if (newdata == "contemplate report_a_problem") {
                 db.imgs.findOne({
-                    _id: mongojs.ObjectId('548ebff352a31b0805c13bff')
+                    _id: mongojs.ObjectId('548f555052a31b0805c13c04')
                 }, function(err, info) {
                     if (err || !info) {
                         socket.write("There is no art piece with that name...");
                     } else {
-                        socket.write( "\nYou start contemplating the marvel in front of your eyes...\n"+
-                                      "and wonder... What does it mean? What are this shapes and colors?\n"+
-                                      "What is it that your senses really experience from this art piece...\n");
+                        socket.write("\nYou start contemplating the marvel in front of your eyes...\n" +
+                            "and wonder... What does it mean? What are these shapes and colors?\n" +
+                            "What is it that your senses really experience from this art piece...\n");
                         setTimeout(function() {
                             var count = 0;
                             var image = "";
@@ -69,17 +78,55 @@ net.createServer(function(socket) {
                                 image += info[count];
                                 count += 1;
                                 if (count == 80090) {
-                                    socket.write(image);
+                                    socket.write(image); 
+                                    socket.write("\n");
+                                    socket.write("\nFinally its content start making sense...\n" +
+                                    "What the artist was trying to convey obvious now...\n");
                                 }
                             }
                         }, 10000);
                     }
                 });
 
+            }else if (newdata == "contemplate broken_portal") {
+                db.imgs.findOne({
+                    _id: mongojs.ObjectId('548f553852a31b0805c13c03')
+                }, function(err, info) {
+                    if (err || !info) {
+                        socket.write("There is no art piece with that name...");
+                    } else {
+                        socket.write("\nYou start contemplating the marvel in front of your eyes...\n" +
+                            "and wonder... What does it mean? What are this shapes and colors?\n" +
+                            "What is it that your senses really experience from this art piece...\n");
+                        setTimeout(function() {
+                            var count = 0;
+                            var image = "";
+                            for (var i = 0; i < 275825; i++) {
+                                image += info[count];
+                                count += 1;
+                                if (count == 275824) {
+                                    socket.write(image);
+                                    socket.write("\n");
+                                    socket.write("\nFinally its content start making sense...\n" +
+                                    "What the artist was trying to convey is obvious now...\n");
+                                }
+                            }
+                        }, 10000);
+                    }
+                });
+
+            } else if (newdata.split(" ")[0] == "say") {
+                var s = newdata.split(" ");
+                var newString = "";
+                for (var i = 0; i < s.length; i++) {
+                    if (i != 0) {
+                        newString += s[i] + " ";
+                    }
+                }
+                broadcast(socket.name + "> " + newString, socket);
             } else {
                 socket.write(newdata);
             }
-            //broadcast(socket.name  + "> " + data, socket);
         });
     });
 

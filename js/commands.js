@@ -10,7 +10,7 @@ exports.checkCommands = function(c, callback){
 						"look - look arround the gallery space in a general way\n"+
 						"example: look around or look north wall\n"+
 						"-------------------------------------------------------------------\n"+
-						"contemplate - use this command to a specific artpiece by its name\n"+
+						"contemplate - use this command with a specific artpiece by its name\n"+
 						"example: contemplate monalisa\n"+
 						"-------------------------------------------------------------------\n"+
 						"commands - use this command to see a list of all available actions\n"+
@@ -21,7 +21,7 @@ exports.checkCommands = function(c, callback){
 						"-------------------------------------------------------------------\n";
 	}else if(c == "look around\r\n"){
 		commands = 	"\nYou are in the first floor of the gallery.\n"+
-						"The atmosphere is very clean. White walls perfectly painted almos glow under the\n"+
+						"The atmosphere is very clean. White walls perfectly painted almost glow under the\n"+
 						"uniform light. The floor is pure flat light grey marble and the ceiling gives the\n"+
 						"space an industrial touch. The appereance of the space is a convergence of post-minimalism\n"+
 						"and ready-made aesthetics\n"+
@@ -51,22 +51,29 @@ exports.checkCommands = function(c, callback){
 						"Description:  Arcangel’s Photoshop CS series are large c-print gradient digital paintings \n"+
 						"solely in the eponymous popular image editing program. They appear to be a pop art version\n"+
 						"of abstract expressionism or color field painting.\n\n";
+	}else if(c == "look east\r\n"){
+		commands = 	"\n-------------------------------------------------------------\n"+
+						"You are looking at the east wall of the space.\n"+
+						"You notice 1 huge art piece covering all the wall.\n\n"+
+						"broken_portal\n"+ 
+						"Author: andres_castillo, 2012.\n"+
+						"Digital photograph.\n"+
+						"4 x 2 meters\n"+
+						"Description: A broken piece of mirror reflecting a parallel world\n"+
+						"than the one the artist is in.\n\n";
 	}else if(c == "look\r\n"){
 		commands = 	"\nYou need to specify where to look\n"+
 						"Example: look around, look north, look east, etc...\n";
-	}else if(c == "@store_art\r\n"){
-		commands = 	"store_art";
+	}else if(c == "@store_emilio\r\n"){
+		commands = 	"store_emilio";
+	}else if(c == "@store_tuto\r\n"){
+		commands = 	"store_tuto";
 	}else if(c == "contemplate report_a_problem\r\n"){
 		commands = 	"contemplate report_a_problem";
+	}else if(c == "contemplate broken_portal\r\n"){
+		commands = 	"contemplate broken_portal";
 	}else if(c.split(" ")[0] == "say"){
-		var s = c.split(" ");
-		var newString = "";
-		for(var i=0; i<s.length; i++){
-			if(i != 0){
-				newString += s[i];
-			}
-		}
-		commands = newString;
+		commands = c;
 	}else{
 		commands = 	"\nSorry... Command not found!\n"+
 						"Please try again.\n";
