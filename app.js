@@ -39,22 +39,45 @@ net.createServer(function(socket) {
         });
     });
     broadcast(socket.name + " joined the chat\n", socket);
-
+    var db = mongojs("metagallery", ["imgs"]); //connect to database
     // Handle incoming messages from clients.
     socket.on('data', function(data) {
         c.checkCommands(data.toString('utf-8'), function(newdata) {
-            socket.write(newdata);
             if (newdata == "store_art") {
                 var imagefile = fs.readFile("./images/emilio.jpg", 'base64', function(err, imgdata) {
                     if (err) throw err;
-                    //console.log(data);
-                    //connect to database
-                    var db = mongojs("metagallery", ["imgs"]);
+                    //save images and info to database
                     db.imgs.save(imgdata, function(err, saved) {
-                        if (err || !saved) console.log("User not saved");
-                        else console.log("User saved");
+                        if (err || !saved) console.log("Data not saved");
+                        else console.log("Data saved");
                     });
                 });
+            } else if (newdata == "contemplate report_a_problem") {
+                db.imgs.findOne({
+                    _id: mongojs.ObjectId('548ebff352a31b0805c13bff')
+                }, function(err, info) {
+                    if (err || !info) {
+                        socket.write("There is no art piece with that name...");
+                    } else {
+                        socket.write( "\nYou start contemplating the marvel in front of your eyes...\n"+
+                                      "and wonder... What does it mean? What are this shapes and colors?\n"+
+                                      "What is it that your senses really experience from this art piece...\n");
+                        setTimeout(function() {
+                            var count = 0;
+                            var image = "";
+                            for (var i = 0; i < 80091; i++) {
+                                image += info[count];
+                                count += 1;
+                                if (count == 80090) {
+                                    socket.write(image);
+                                }
+                            }
+                        }, 10000);
+                    }
+                });
+
+            } else {
+                socket.write(newdata);
             }
             //broadcast(socket.name  + "> " + data, socket);
         });

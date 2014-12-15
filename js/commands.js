@@ -1,8 +1,7 @@
-fs = require('fs');
-
 exports.checkCommands = function(c, callback){
+	var commands;
 	if(c == "commands\r\n"){
-		var commands = 	"\n-------------------------------------------------------------------\n"+
+		commands = 	"\n-------------------------------------------------------------------\n"+
 						"PLEASE ENTER ONE OF THE FOLLOWING COMMANDS:\n"+
 						"-------------------------------------------------------------------\n"+
 						"say - say anything you like, others in the space will hear you\n"+
@@ -21,19 +20,19 @@ exports.checkCommands = function(c, callback){
 						"example: walk room2!\n"+
 						"-------------------------------------------------------------------\n";
 	}else if(c == "look around\r\n"){
-		var commands = 	"\nYou are in the first floor of the gallery.\n"+
+		commands = 	"\nYou are in the first floor of the gallery.\n"+
 						"The atmosphere is very clean. White walls perfectly painted almos glow under the\n"+
 						"uniform light. The floor is pure flat light grey marble and the ceiling gives the\n"+
 						"space an industrial touch. The appereance of the space is a convergence of post-minimalism\n"+
 						"and ready-made aesthetics\n"+
 						"Four walls populated with 2D art work and a sculpture in the center of the space...\n";
 	}else if(c == "look north\r\n"){
-		var commands = 	"\n-------------------------------------------------------------\n"+
+		commands = 	"\n-------------------------------------------------------------\n"+
 						"You are looking at the north wall of the space.\n"+
 						"You notice 2 different art pieces hanging from this wall.\n\n"+
 						"On the left:\n"+
-						"Report a Problem.\n"+ 
-						"Author: Emilio Vavarella, 2012.\n"+
+						"report_a_problem\n"+ 
+						"Author: emilio_vavarella, 2012.\n"+
 						"Digital photograph.\n"+
 						"Variable dimensions\n"+
 						"Description:  Report a Problem is the first part of the project, The Google Trilogy, about\n"+
@@ -53,14 +52,23 @@ exports.checkCommands = function(c, callback){
 						"solely in the eponymous popular image editing program. They appear to be a pop art version\n"+
 						"of abstract expressionism or color field painting.\n\n";
 	}else if(c == "look\r\n"){
-		var commands = 	"\nYou need to specify where to look\n"+
+		commands = 	"\nYou need to specify where to look\n"+
 						"Example: look around, look north, look east, etc...\n";
 	}else if(c == "@store_art\r\n"){
-		var commands = 	"store_art";
-	}}else if(c == "contemplate\r\n"){
-		var commands = 	"store_art";
+		commands = 	"store_art";
+	}else if(c == "contemplate report_a_problem\r\n"){
+		commands = 	"contemplate report_a_problem";
+	}else if(c.split(" ")[0] == "say"){
+		var s = c.split(" ");
+		var newString = "";
+		for(var i=0; i<s.length; i++){
+			if(i != 0){
+				newString += s[i];
+			}
+		}
+		commands = newString;
 	}else{
-		var commands = 	"Sorry... Command not found!\n"+
+		commands = 	"\nSorry... Command not found!\n"+
 						"Please try again.\n";
 	}
 	callback(commands);

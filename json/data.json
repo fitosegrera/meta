@@ -11,7 +11,7 @@
         "all the “wrong landscapes” I encountered before others could report the problems and prompt\n" +
         "the company to adjust the images. Common landscapes are transformed by Google’s unexpected\n" +
         "technical errors into something new.",
-    content: "ffd8 ffe0 0010 4a46 4946 0001 0101 0048
+    contents: "ffd8 ffe0 0010 4a46 4946 0001 0101 0048
 0048 0000 fffe 003e 4352 4541 544f 523a
 2067 642d 6a70 6567 2076 312e 3020 2875
 7369 6e67 2049 4a47 204a 5045 4720 7638
