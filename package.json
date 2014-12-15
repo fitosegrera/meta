@@ -1,0 +1,8 @@
+{
+  "name": "Express-Serve-Content",
+  "version": "0.0.1",
+  "dependencies": {
+    "figlet": "^1.1.0",
+    "mongojs": "^0.18.0"
+  }
+}
