@@ -17,8 +17,6 @@ net.createServer(function(socket) {
     // Put this new client in the list
     clients.push(socket);
 
-    // Send a nice welcome message and announce
-
     figlet.text('meta\ngallery', {
         font: 'Univers',
         horizontalLayout: 'default',
@@ -52,7 +50,7 @@ net.createServer(function(socket) {
                         else console.log("Data saved");
                     });
                 });
-            }else if (newdata == "store_tuto") {
+            } else if (newdata == "store_tuto") {
                 var imagefile = fs.readFile("./images/tuto.jpg", 'base64', function(err, imgdata) {
                     if (err) throw err;
                     //save images and info to database
@@ -78,17 +76,17 @@ net.createServer(function(socket) {
                                 image += info[count];
                                 count += 1;
                                 if (count == 80090) {
-                                    socket.write(image); 
+                                    socket.write(image);
                                     socket.write("\n");
                                     socket.write("\nFinally its content start making sense...\n" +
-                                    "What the artist was trying to convey obvious now...\n");
+                                        "What the artist was trying to convey is obvious now...\n");
                                 }
                             }
                         }, 10000);
                     }
                 });
 
-            }else if (newdata == "contemplate broken_portal") {
+            } else if (newdata == "contemplate broken_portal") {
                 db.imgs.findOne({
                     _id: mongojs.ObjectId('548f553852a31b0805c13c03')
                 }, function(err, info) {
@@ -108,7 +106,7 @@ net.createServer(function(socket) {
                                     socket.write(image);
                                     socket.write("\n");
                                     socket.write("\nFinally its content start making sense...\n" +
-                                    "What the artist was trying to convey is obvious now...\n");
+                                        "What the artist was trying to convey is obvious now...\n");
                                 }
                             }
                         }, 10000);
